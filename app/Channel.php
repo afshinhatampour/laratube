@@ -12,7 +12,7 @@ class Channel extends Model implements HasMedia
     use HasMediaTrait;
 
     protected $fillable = [
-        'name'
+        'name', 'description'
     ];
 
     public function user()
@@ -33,5 +33,14 @@ class Channel extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')
             ->width(100)->height(100);
+    }
+
+    public function editable()
+    {
+        if (!auth()->user()) {
+            return false;
+        }
+
+        return auth()->user()->id === $this->user->id;
     }
 }

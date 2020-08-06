@@ -8,36 +8,50 @@
             <div class="card">
                 <div class="card-header">{{ $channel->name }}</div>
 
-                <div class="card-body">
+                <div class="card-body text-center">
 
                     <img src="{{ $channel->image() }}" class="channel-avatar">
 
-                    <form action="{{ route('channels.update', $channel->id) }}" method="post" enctype="multipart/form-data">
+                    @if($channel->editable())
+                        <form action="{{ route('channels.update', $channel->id) }}" method="post"
+                              enctype="multipart/form-data">
 
-                        @csrf
+                            @csrf
 
-                        @method('PATCH')
+                            @method('PATCH')
 
-                        <div class="form-group">
-                            <label for="name">name</label>
-                            <input type="text" class="form-control" name="name" value="{{ $channel->name }}">
-                        </div>
+                            <div class="form-group">
+                                <label class="float-left" for="name">name</label>
+                                <input type="text" class="form-control" name="name" value="{{ $channel->name }}">
+                            </div>
 
-                        <div class="form-group">
-                            <label for="description">description</label>
-                            <textarea name="description" rows="10" class="form-control">{{ $channel->description }}</textarea>
-                        </div>
+                            <div class="form-group">
+                                <label class="float-left" for="description">description</label>
+                                <textarea name="description" rows="10"
+                                          class="form-control">{{ $channel->description }}</textarea>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="avatar">avatar</label>
-                            <input type="file" name="image" class="form-control">
-                        </div>
+                            <div class="form-group">
+                                <label class="float-left" for="avatar">avatar</label>
+                                <input type="file" name="image" class="form-control">
+                            </div>
 
-                        <div class="text-center">
-                            <input type="submit" class="btn btn-secondary" value="Update">
-                        </div>
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-primary text-white" value="Update profile">
+                            </div>
 
-                    </form>
+                        </form>
+
+                        @if($errors->any)
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li class="text-danger">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    @else
+                        <p>{{ $channel->description }}</p>
+                    @endif
 
                 </div>
             </div>
