@@ -6,3 +6,10 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.channel-avatar {
+    background: #ededed;
+    border: 1px gray;
+    width: 100px;
+    height: 100px;
+}
